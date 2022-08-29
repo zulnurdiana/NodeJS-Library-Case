@@ -1,0 +1,47 @@
+<style>
+  #dashboardmahasiswa{
+    padding-top: 6rem;
+  }
+</style>
+
+<section id="dashboardmahasiswa">
+  <div class="row">
+    <div class="col-md-12 text-center mb-3">
+      <h1>Dashboard Mahasiswa</h1>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+
+    <div class="col-md-6">
+      <a href="/createmahasiswa" class="btn fw-bold text-white shadow mb-1" style="background-color: #23f0f7;">Tambah Data</a>
+      <table class="table">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">Id Mahasiswa</th>
+            <th scope="col">Nama</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% hasil.forEach(h => { %>
+            <tr class="text-center" id="hasil">
+              <td>
+                <%= h.id_mahasiswa %>
+              </td>
+              <td>
+                <%= h.nama_mahasiswa %>
+              </td>
+              <td>
+                <a href="/update/mahasiswa/<%= h.id_mahasiswa %>" class="btn btn-info badge"><i class="bi bi-info-circle"></i>
+                  Update</a>
+                <a href="/delete/mahasiswa/<%= h.id_mahasiswa %>" class="btn btn-danger badge"
+                  onclick="return confirm(`Yakin akan menghapus mahasiswa <%= h.nama_mahasiswa %>%>`)"><i class="bi bi-trash-fill"></i> Delete</a>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+</section>

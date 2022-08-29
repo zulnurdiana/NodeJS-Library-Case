@@ -1,0 +1,37 @@
+<style>
+  #form-tambah-mahasiswa {
+    padding-top: 6rem;
+  }
+</style>
+
+<section id="form-tambah-mahasiswa">
+  <div class="container">
+    <div class="row text-center mb-3">
+      <div class="col-md-12">
+        <h1>Form Update Mahasiswa</h1>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <form action="/updatemahasiswa" method="post">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Id Mahasiswa</label>
+            <% for(let id of mhs) { %>
+            <input type="hidden" value="<%= id.id_mahasiswa %>" name="id_mahasiswa">
+            <input type="text" class="form-control" disabled value="<%= id.id_mahasiswa %>" name="id_mahasiswa">
+            <% } %> 
+          </div>
+          <div class="mb-3">
+            <label for="nama_mahasiswa" class="form-label">Nama Mahasiswa</label>
+            <% for(let nama of mhs){ %> 
+            <input type="text" class="form-control" id="nama_mahasiswa" value="<%= nama.nama_mahasiswa %>" name="nama_mahasiswa" required>
+            <% } %> 
+          </div>
+          <center>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </center>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -3,7 +3,7 @@ const epxressLayout = require("express-ejs-layouts");
 const mysql = require("mysql");
 const chalk = require("chalk");
 const expressEjsLayouts = require("express-ejs-layouts");
-const port = 3001;
+const port = 3002;
 
 const app = express();
 app.set("view engine", "ejs");
@@ -98,6 +98,78 @@ db.connect((err) => {
             layout: "../layouts/template-main.ejs",
             detail,
           });
+        }
+      );
+    });
+
+    // Dashboard Mahsiswa
+    app.get("/dashboardmahasiswa", (req, res) => {
+      db.query("SELECT * FROM mahasiswa", (err, result) => {
+        let hasil = JSON.parse(JSON.stringify(result));
+        res.render("dashboardmahasiswa", {
+          title: "Halaman Detail",
+          layout: "../layouts/template-main.ejs",
+          hasil,
+        });
+      });
+    });
+
+    // Tambah Mahasiswa
+    app.get("/createmahasiswa", (req, res) => {
+      db.query(
+        "SELECT id_mahasiswa FROM mahasiswa ORDER BY id_mahasiswa DESC LIMIT 1",
+        (err, result) => {
+          let id_mhs = JSON.parse(JSON.stringify(result));
+          res.render("formtambahmahasiswa", {
+            title: "Halaman Tambah Mahasiswa",
+            layout: "../layouts/template-main.ejs",
+            id_mhs,
+          });
+        }
+      );
+    });
+
+    // Insert Form createmahasiswa
+    app.post("/createmahasiswa", (req, res) => {
+      db.query(
+        `INSERT INTO mahasiswa(nama_mahasiswa) VALUES('${req.body.nama_mahasiswa}')`,
+        (err, result) => {
+          res.redirect("/dashboardmahasiswa");
+        }
+      );
+    });
+
+    // Delete mahasiswa
+    app.get("/delete/mahasiswa/:id_mahasiswa", (req, res) => {
+      db.query(
+        `DELETE FROM mahasiswa WHERE id_mahasiswa=${req.params.id_mahasiswa}`,
+        (err, result) => {
+          res.redirect("/dashboardmahasiswa");
+        }
+      );
+    });
+
+    // Form Update Mahasiswa
+    app.get("/update/mahasiswa/:id_mahasiwa", (req, res) => {
+      db.query(
+        `SELECT * FROM mahasiswa WHERE id_mahasiswa=${req.params.id_mahasiwa}`,
+        (err, result) => {
+          let mhs = JSON.parse(JSON.stringify(result));
+          res.render("formupdatemahasiswa", {
+            title: "Halaman Update Mahasiswa",
+            layout: "../layouts/template-main.ejs",
+            mhs,
+          });
+        }
+      );
+    });
+
+    // Update From Mahasiswa
+    app.post("/updatemahasiswa", (req, res) => {
+      db.query(
+        `UPDATE mahasiswa SET nama_mahasiswa='${req.body.nama_mahasiswa}' WHERE id_mahasiswa='${req.body.id_mahasiswa}'`,
+        (err, result) => {
+          res.redirect("/dashboardmahasiswa");
         }
       );
     });
