@@ -174,6 +174,78 @@ db.connect((err) => {
       );
     });
 
+    // Dashboard buku
+    app.get("/dashboardbuku", (req, res) => {
+      db.query("SELECT * FROM buku", (err, result) => {
+        let buku = JSON.parse(JSON.stringify(result));
+        res.render("dashboardbuku", {
+          title: "Dashboard Buku",
+          layout: "../layouts/template-main.ejs",
+          buku,
+        });
+      });
+    });
+
+    // Form tambah buku
+    app.get("/createbuku", (req, res) => {
+      db.query(
+        "SELECT id_buku FROM buku ORDER BY id_buku DESC LIMIT 1",
+        (err, result) => {
+          let id_buku = result;
+          res.render("formtambahbuku", {
+            title: "Form Tambah Buku",
+            layout: "../layouts/template-main.ejs",
+            id_buku,
+          });
+        }
+      );
+    });
+
+    // Insert form buku
+    app.post("/createbuku", (req, res) => {
+      db.query(
+        `INSERT INTO buku(nama_buku,tahun) VALUES('${req.body.nama_buku}','${req.body.tahun}')`,
+        (err, result) => {
+          res.redirect("/dashboardbuku");
+        }
+      );
+    });
+
+    // Delete buku
+    app.get("/delete/buku/:id_buku", (req, res) => {
+      db.query(
+        `DELETE FROM buku where id_buku=${req.params.id_buku}`,
+        (err, result) => {
+          res.redirect("/dashboardbuku");
+        }
+      );
+    });
+
+    // Form Update buku
+    app.get("/update/buku/:id_buku", (req, res) => {
+      db.query(
+        `SELECT * FROM buku WHERE id_buku=${req.params.id_buku}`,
+        (err, result) => {
+          let buku = JSON.parse(JSON.stringify(result));
+          res.render("formupdatebuku", {
+            title: "Form Update Buku",
+            layout: "../layouts/template-main.ejs",
+            buku,
+          });
+        }
+      );
+    });
+
+    // Update form buku
+    app.post("/updatebuku", (req, res) => {
+      db.query(
+        `UPDATE buku SET nama_buku='${req.body.nama_buku}',tahun='${req.body.tahun}' WHERE id_buku='${req.body.id_buku}'`,
+        (err, result) => {
+          res.redirect("/dashboardbuku");
+        }
+      );
+    });
+
     // Console
     app.listen(port, () => {
       console.log(`app listening at ${chalk.red(`http://localhost:${port}`)}`);

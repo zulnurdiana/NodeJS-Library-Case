@@ -1,0 +1,36 @@
+<style>
+  #form-tambah-buku{
+    padding-top: 6rem;
+  }
+</style>
+
+<section id="form-tambah-buku">
+  <div class="row">
+    <div class="col-md-12 text-center mb-3">
+      <h1>Form Tambah Buku</h1>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form action="/createbuku" method="post">
+        <div class="mb-3">
+          <label for="id_buku" class="form-label">Id Buku</label>
+          <% for(let id of id_buku) { %>
+            <input type="text" class="form-control" disabled id="id_buku" value="<%= id.id_buku + 1  %>">
+            <% } %>
+        </div>
+        <div class="mb-3">
+          <label for="nama_buku" class="form-label">Nama Buku</label>
+          <input type="text" class="form-control" id="nama_buku" name="nama_buku" required>
+        </div>
+        <div class="mb-3">
+          <label for="tahun" class="form-label">Tahun</label>
+          <input type="text" class="form-control" id="tahun" name="tahun" required>
+        </div>
+        <center>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </center>
+      </form>
+    </div>
+  </div>
+</section>

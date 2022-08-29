@@ -1,0 +1,53 @@
+<style>
+  #dashboard-buku{
+    padding-top: 6rem;
+  }
+</style>
+
+
+<section id="dashboard-buku">
+  <div class="row">
+    <div class="col-md-12 text-center mb-3">
+      <h1>Dashboard Buku</h1>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <a href="/createbuku" class="btn fw-bold text-white shadow mb-1" style="background-color: #23f0f7;">Tambah
+        Data</a>
+      <table class="table">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">Id Buku</th>
+            <th scope="col">Judul</th>
+            <th scope="col">Tahun</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% buku.forEach(b => { %>
+            <tr class="text-center" id="hasil">
+              <td>
+                <%= b.id_buku %>
+              </td>
+              <td>
+                <%= b.nama_buku %>
+              </td>
+              <td>
+                <%= b.tahun %>
+              </td>
+              <td>
+                <a href="/update/buku/<%= b.id_buku %>" class="btn btn-info badge"><i
+                    class="bi bi-info-circle"></i>
+                  Update</a>
+                <a href="/delete/buku/<%= b.id_buku %>" class="btn btn-danger badge"
+                  onclick="return confirm(`Yakin akan menghapus buku <%= b.nama_buku %>`)"><i
+                    class="bi bi-trash-fill"></i> Delete</a>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
