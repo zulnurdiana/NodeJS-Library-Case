@@ -102,7 +102,7 @@ db.connect((err) => {
       );
     });
 
-    // Dashboard Mahsiswa kita
+    // Dashboard Mahasiswa
     app.get("/dashboardmahasiswa", (req, res) => {
       db.query("SELECT * FROM mahasiswa", (err, result) => {
         let hasil = JSON.parse(JSON.stringify(result));
