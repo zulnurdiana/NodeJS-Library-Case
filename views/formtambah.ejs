@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="css/form-tambah.css">
+<section id="form-tambah">
+  <div class="row">
+    <div class="col-md-12 text-center mb-3">
+      <h1>Form Tambah</h1>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <form action="/create" method="post">
+        <div class="mb-3">
+          <label for="id_mahasiswa" class="form-label">Nama</label>
+          <select class="form-select" name="id_mahasiswa">
+            <option selected>Pilih Nama</option>
+            <% for (let e of mahasiswa ) { %> 
+            <option value="<%= e.id_mahasiswa %>"><%= e.id_mahasiswa %>-<%= e.nama_mahasiswa %></option>
+            <% } %> 
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="id_buku" class="form-label">Judul Buku</label>
+          <select class="form-select" name="id_buku">
+            <option selected>Pilih Buku</option>
+            <% for(let b of buku) { %> 
+            <option value="<%= b.id_buku  %>"><%= b.id_buku %>-<%= b.nama_buku  %></option>
+            <% } %> 
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="tanggal" class="form-label">Tanggal</label>
+          <input type="date" class="form-control" id="tanggal" disabled value="<%=new Date().toISOString().slice(0,10)%>"
+            name="tanggal">
+        </div>
+        <center>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </center>
+      </form>
+    </div>
+  </div>
+</section>

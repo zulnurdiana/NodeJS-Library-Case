@@ -1,0 +1,145 @@
+
+<link rel="stylesheet" href="css/style.css">
+
+<!-- Jumbotron -->
+    <div class="jumbotron text-center">
+      <img src="img/profile.png" class="rounded-circle img-thumbnail" width="250">
+      <h1 class="display-4 fw-bold text-white">Cuttie Library</h1>
+      <p class="lead">Education | Reading | Dreaming</p>
+      <%- include('../asset/gelombang1.svg') %>
+    </div>
+<!-- End Jumbotron -->
+
+<!-- About -->
+<section id="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center mb-3">
+        <h2>About</h2>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-4 text-center">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae, omnis dignissimos eligendi voluptatum perspiciatis mollitia libero harum necessitatibus, suscipit quae aut dolore accusamus. Eligendi, expedita!
+      </div>
+      <div class="col-md-4 text-center">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet quam ex quis totam odio. Sapiente quidem nisi at asperiores quibusdam. Molestias aliquid odio quod, delectus consequuntur laboriosam hic natus labore.
+      </div>
+    </div>
+  </div>
+  <%- include('../asset/gelombang2.svg') %> 
+</section>
+<!-- End About -->
+
+<!-- Our Project -->
+<section id="project">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center mb-3">
+        <h2>Our Project</h2>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/project/1.jpg" class="card-img-top" alt="...">
+          <div class="card-body text-center">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/project/2.jpg" class="card-img-top" alt="...">
+          <div class="card-body text-center">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/project/3.jpg" class="card-img-top" alt="...">
+          <div class="card-body text-center">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/project/4.jpg" class="card-img-top" alt="...">
+          <div class="card-body text-center">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/project/5.jpg" class="card-img-top" alt="...">
+          <div class="card-body text-center">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include('../asset/gelombang1.svg') %> 
+</section>
+
+<!-- End Project -->
+
+<!-- Feedback -->
+
+<section id="feedback">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center mb-3">
+        <h2>Feedback</h2>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <form>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Email</label>
+            <input type="email" class="form-control" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Pesan</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+          <center>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </center>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- End Feedback -->
+
+
+<!-- Footer -->
+
+
+
+<!-- End Footer -->
+
+
+<!-- My Script -->
+<script>
+    // menambahkan class shadow pada semua card
+    const card = document.querySelectorAll('#project .card');
+    card.forEach((c)=>{
+      c.classList.add('shadow');
+    })
+</script>

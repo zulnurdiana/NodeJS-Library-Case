@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="css/dashboard.css">
+
+<section id="daftar">
+  <div class="row">
+    <div class="col-md-12 text-center mb-3">
+      <h1>Dashboard Library</h1>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    
+    <div class="col-md-8">
+      <a href="/create" class="btn fw-bold text-white shadow mb-1" style="background-color: #23f0f7;">Tambah Data</a>
+      <table class="table">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">No</th>
+            <th scope="col">Nama</th>
+            <th scope="col">Judul Buku</th>
+            <th scope="col">Tanggal</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% hasil.forEach((h,i) => { %>
+            <tr class="text-center" id="hasil">
+              <th scope="row"><%= i+1  %></th>
+              <td><%=  h.nama_mahasiswa %></td>
+              <td><%= h.nama_buku  %></td>
+              <td><%= h.tanggal.slice(0,10)%></td>
+              <td>
+                <a href="/detail/<%= h.id_pinjam %>" class="btn btn-info badge"><i class="bi bi-info-circle"></i> Detail</a>
+                <a href="/delete/<%= h.id_pinjam %>" class="btn btn-danger badge" onclick="return confirm(`Yakin akan menghapus peminjaman\nNama : <%= h.nama_mahasiswa %>\nJudul Buku : <%= h.nama_buku %>\nTanggal : <%= h.tanggal.slice(0,10) %>`)"><i class="bi bi-trash"></i> Delete</a>
+                <a href="" class="btn btn-success badge"><i class="bi bi-code-slash"></i> Update</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</section>

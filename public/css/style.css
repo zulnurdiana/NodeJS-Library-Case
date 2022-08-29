@@ -1,0 +1,19 @@
+
+.jumbotron {
+  background-color: #23f0f7;
+  padding-top: 6rem;
+}
+
+#project {
+  background-color: #23f0f7;
+}
+
+#project .container .row img {
+  border-radius: 5px;
+  height: 250px;
+}
+
+.f-bawah {
+  background-color: #01f5fd;
+  padding: 20px;
+}
