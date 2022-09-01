@@ -1,0 +1,41 @@
+<style>
+  #login {
+    padding-top: 6rem;
+  }
+
+  .form-login{
+    background-color: #01f5fd;
+    height: 250px;
+    padding: 30px;
+    width: 500px;
+    margin: 10px auto;
+    border-radius: 10px;
+  }
+</style>
+
+<section id="login">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center mb-3">
+        <h1>Form Registrasi</h1>
+      </div>
+    </div>
+    <div class="row form-login shadow">
+      <div class="col-md-12">
+        <form action="/prosesregistrasi"  method="post">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+          <center>
+            <button type="submit" class="btn btn-primary fw-bold">Submit</button>
+          </center>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

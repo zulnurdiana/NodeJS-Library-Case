@@ -3,9 +3,18 @@ const epxressLayout = require("express-ejs-layouts");
 const mysql = require("mysql");
 const chalk = require("chalk");
 const expressEjsLayouts = require("express-ejs-layouts");
+const session = require("express-session");
 const port = 3002;
 
 const app = express();
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(express.json());
 app.set("view engine", "ejs");
 app.use(expressEjsLayouts);
 app.use(express.static("public"));
@@ -23,12 +32,88 @@ db.connect((err) => {
     console.error("error connecting: " + err.stack);
     return;
   } else {
-    // Halaman Index
+    // Halaman Login
     app.get("/", (req, res) => {
-      res.render("index", {
-        title: "Mainhall",
+      res.render("login", {
+        title: "Halaman Login",
         layout: "../layouts/template-main.ejs",
       });
+    });
+
+    // Proses Login
+    app.post("/proseslogin", (req, res) => {
+      let username = req.body.username;
+      let password = req.body.password;
+      if (username && password) {
+        // Execute SQL query that'll select the account from the database based on the specified username and password
+        db.query(
+          `SELECT * FROM user WHERE username ='${username}' AND password = '${password}'`,
+          (err, results) => {
+            // If there is an issue with the query, output the err
+            if (err) throw err;
+            // If the account exists
+            if (results.length > 0) {
+              // Authenticate the user
+              req.session.loggedin = true;
+              req.session.username = username;
+              // Redirect to home page
+              res.redirect("/index");
+            } else {
+              res.send("Incorrect Username and/or Password!");
+            }
+            res.end();
+          }
+        );
+      } else {
+        res.redirect("/registrasi");
+        res.end();
+      }
+    });
+
+    // Halaman Registrasi
+    app.get("/registrasi", (req, res) => {
+      res.render("registrasi", {
+        title: "Form Registrasi",
+        layout: "../layouts/template-main.ejs",
+      });
+    });
+
+    // Proses Registrasi
+    app.post("/prosesregistrasi", (req, res) => {
+      let username = req.body.username;
+      let password = req.body.password;
+      if (username && password) {
+        db.query(
+          `SELECT * FROM user WHERE username='${username}' AND password = '${password}'`,
+          (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+              res.send("<h1> User sudah ada</h1>");
+            } else {
+              db.query(
+                `INSERT INTO user(username,password) VALUES('${username}','${password}')`,
+                (err, result) => {
+                  res.redirect("/");
+                }
+              );
+            }
+          }
+        );
+      } else {
+        res.send("<h1> Masukkan username & Password </h1>");
+      }
+    });
+
+    // Halaman Index
+    app.get("/index", (req, res) => {
+      if (req.session.loggedin) {
+        res.render("index", {
+          title: "Mainhall",
+          layout: "../layouts/template-main.ejs",
+        });
+      } else {
+        res.send("<h1> Login Dulu </h1>");
+      }
     });
 
     // Halaman Dashboard
