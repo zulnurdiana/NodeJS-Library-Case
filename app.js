@@ -1,10 +1,9 @@
 const express = require("express");
-const epxressLayout = require("express-ejs-layouts");
-const mysql = require("mysql");
 const chalk = require("chalk");
 const expressEjsLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const port = 3002;
+const db = require("./database/db");
 
 const app = express();
 app.use(
@@ -19,13 +18,6 @@ app.set("view engine", "ejs");
 app.use(expressEjsLayouts);
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
-
-var db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "cuttielibrary",
-});
 
 db.connect((err) => {
   if (err) {
