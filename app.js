@@ -323,6 +323,26 @@ db.connect((err) => {
       );
     });
 
+    // Dashboard gudang
+    app.get("/dashboardgudang", (req, res) => {
+      db.query("SELECT * FROM peminjaman", (err, result) => {
+        let total_pinjam = result.length;
+        db.query("SELECT * FROM buku", (err, result) => {
+          let total_buku = result.length;
+          db.query("SELECT * FROM mahasiswa", (err, result) => {
+            let total_siswa = result.length;
+            res.render("dashboardgudang", {
+              title: "Dashboard Gudang",
+              layout: "../layouts/template-main.ejs",
+              total_pinjam,
+              total_buku,
+              total_siswa,
+            });
+          });
+        });
+      });
+    });
+
     // Console
     app.listen(port, () => {
       console.log(`app listening at ${chalk.red(`http://localhost:${port}`)}`);

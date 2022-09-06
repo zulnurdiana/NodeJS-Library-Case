@@ -1,0 +1,50 @@
+<style>
+  #gudang {
+    padding-top: 6rem;
+  }
+  #tempat {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+  }
+
+  .box {
+    background-color: aqua;
+    padding: 10px;
+    width: 200px;
+    height: 150px;
+    margin: 10px;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .box:hover {
+    transform: rotate(5deg);
+    transition: 0.5s;
+  }
+</style>
+
+<section id="gudang">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1>Dashboard Gudang 🚚</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-5" id="tempat">
+        <div class="box">
+          <h4 class="text-center fw-bold text-white">Jumlah Pinjam</h4>
+          <h5 class="text-center display-3 fw-bold text-white"><%= total_pinjam %></h5>
+        </div>
+        <div class="box">
+          <h4 class="text-center fw-bold text-white">Jumlah Siswa</h4>
+          <h5 class="text-center display-3 fw-bold text-white"><%= total_siswa %></h5>
+        </div>
+        <div class="box">
+          <h4 class="text-center fw-bold text-white">Jumlah Buku</h4>
+          <h5 class="text-center display-3 fw-bold text-white"><%= total_buku %></h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
