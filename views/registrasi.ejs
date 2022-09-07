@@ -15,10 +15,17 @@
 
 <section id="login">
   <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
       <div class="col-md-12 text-center mb-3">
-        <h1>Form Registrasi</h1>
+        <h1>Form Registrasi 📃</h1>
       </div>
+      <% if (message) { %>
+        <div class="col-md-5">
+          <div class="alert alert-danger text-center fw-bold" role="alert">
+            <%= message %>
+          </div>
+        </div>
+        <% } %>
     </div>
     <div class="row form-login shadow">
       <div class="col-md-12">

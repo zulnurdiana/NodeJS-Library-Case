@@ -29,6 +29,8 @@ db.connect((err) => {
       res.render("login", {
         title: "Halaman Login",
         layout: "../layouts/template-main.ejs",
+        message: "",
+        message_warna: "alert-danger",
       });
     });
 
@@ -51,14 +53,23 @@ db.connect((err) => {
               // Redirect to home page
               res.redirect("/index");
             } else {
-              res.send("Incorrect Username and/or Password!");
+              res.render("login", {
+                title: "Halaman Login",
+                layout: "../layouts/template-main.ejs",
+                message: "Username & Password Invalid",
+                message_warna: "alert-danger",
+              });
             }
             res.end();
           }
         );
       } else {
-        res.redirect("/registrasi");
-        res.end();
+        res.render("login", {
+          title: "Halaman Login",
+          layout: "../layouts/template-main.ejs",
+          message: "Jika belum memiliki akun silahkan registrasi dulu",
+          message_warna: "alert-danger",
+        });
       }
     });
 
@@ -67,6 +78,7 @@ db.connect((err) => {
       res.render("registrasi", {
         title: "Form Registrasi",
         layout: "../layouts/template-main.ejs",
+        message: "",
       });
     });
 
@@ -74,25 +86,54 @@ db.connect((err) => {
     app.post("/prosesregistrasi", (req, res) => {
       let username = req.body.username;
       let password = req.body.password;
+
+      // cek apakah username dan password nya kosong
       if (username && password) {
-        db.query(
-          `SELECT * FROM user WHERE username='${username}' AND password = '${password}'`,
-          (err, result) => {
-            if (err) throw err;
-            if (result.length > 0) {
-              res.send("<h1> User sudah ada</h1>");
-            } else {
-              db.query(
-                `INSERT INTO user(username,password) VALUES('${username}','${password}')`,
-                (err, result) => {
-                  res.redirect("/");
-                }
-              );
-            }
+        db.query("SELECT * FROM user", (err, result) => {
+          let usernameDB = JSON.parse(JSON.stringify(result));
+          let check = usernameDB.find((f) => f.username === username);
+          if (check) {
+            res.render("registrasi", {
+              title: "Form Registrasi",
+              layout: "../layouts/template-main.ejs",
+              message: "Username & Password sudah terdaftar",
+            });
+          } else {
+            db.query(
+              `INSERT INTO user(username,password) VALUES('${username}','${password}')`,
+              (err, result) => {
+                res.render("login", {
+                  title: "Halaman Login",
+                  layout: "../layouts/template-main.ejs",
+                  message: "Berhasil Melakukan Registrasi silahkan login",
+                  message_warna: "alert-success",
+                });
+              }
+            );
           }
-        );
+        });
+        // db.query(
+        //   `SELECT * FROM user WHERE username='${username}' AND password = '${password}'`,
+        //   (err, result) => {
+        //     if (err) throw err;
+        //     if (result.length > 0) {
+        //       res.send("<h1> User sudah ada</h1>");
+        //     } else {
+        //       db.query(
+        //         `INSERT INTO user(username,password) VALUES('${username}','${password}')`,
+        //         (err, result) => {
+        //           res.redirect("/");
+        //         }
+        //       );
+        //     }
+        //   }
+        // );
       } else {
-        res.send("<h1> Masukkan username & Password </h1>");
+        res.render("registrasi", {
+          title: "Form Registrasi",
+          layout: "../layouts/template-main.ejs",
+          message: "Masukkan Username & Password",
+        });
       }
     });
 
@@ -104,23 +145,37 @@ db.connect((err) => {
           layout: "../layouts/template-main.ejs",
         });
       } else {
-        res.send("<h1> Login Dulu </h1>");
+        res.render("login", {
+          title: "Halaman Login",
+          layout: "../layouts/template-main.ejs",
+          message: "Login Terlebih dahulu",
+          message_warna: "alert-danger",
+        });
       }
     });
 
     // Halaman Dashboard
     app.get("/dashboard", (req, res) => {
-      db.query(
-        "SELECT id_mahasiswa,nama_mahasiswa,nama_buku,tanggal,id_pinjam FROM mahasiswa NATURAL JOIN peminjaman NATURAL JOIN buku ORDER BY tanggal DESC",
-        (err, result) => {
-          let hasil = JSON.parse(JSON.stringify(result));
-          res.render("dashboard", {
-            title: "Dashboard",
-            layout: "../layouts/template-main.ejs",
-            hasil,
-          });
-        }
-      );
+      if (req.session.loggedin) {
+        db.query(
+          "SELECT id_mahasiswa,nama_mahasiswa,nama_buku,tanggal,id_pinjam FROM mahasiswa NATURAL JOIN peminjaman NATURAL JOIN buku ORDER BY tanggal DESC",
+          (err, result) => {
+            let hasil = JSON.parse(JSON.stringify(result));
+            res.render("dashboard", {
+              title: "Dashboard",
+              layout: "../layouts/template-main.ejs",
+              hasil,
+            });
+          }
+        );
+      } else {
+        res.render("login", {
+          title: "Halaman Login",
+          layout: "../layouts/template-main.ejs",
+          message: "Login Terlebih dahulu",
+          message_warna: "alert-danger",
+        });
+      }
     });
 
     // Form Create
@@ -181,14 +236,23 @@ db.connect((err) => {
 
     // Dashboard Mahasiswa
     app.get("/dashboardmahasiswa", (req, res) => {
-      db.query("SELECT * FROM mahasiswa", (err, result) => {
-        let hasil = JSON.parse(JSON.stringify(result));
-        res.render("dashboardmahasiswa", {
-          title: "Halaman Detail",
-          layout: "../layouts/template-main.ejs",
-          hasil,
+      if (req.session.loggedin) {
+        db.query("SELECT * FROM mahasiswa", (err, result) => {
+          let hasil = JSON.parse(JSON.stringify(result));
+          res.render("dashboardmahasiswa", {
+            title: "Halaman Detail",
+            layout: "../layouts/template-main.ejs",
+            hasil,
+          });
         });
-      });
+      } else {
+        res.render("login", {
+          title: "Halaman Login",
+          layout: "../layouts/template-main.ejs",
+          message: "Login Terlebih dahulu",
+          message_warna: "alert-danger",
+        });
+      }
     });
 
     // Tambah Mahasiswa
@@ -253,14 +317,23 @@ db.connect((err) => {
 
     // Dashboard buku
     app.get("/dashboardbuku", (req, res) => {
-      db.query("SELECT * FROM buku", (err, result) => {
-        let buku = JSON.parse(JSON.stringify(result));
-        res.render("dashboardbuku", {
-          title: "Dashboard Buku",
-          layout: "../layouts/template-main.ejs",
-          buku,
+      if (req.session.loggedin) {
+        db.query("SELECT * FROM buku", (err, result) => {
+          let buku = JSON.parse(JSON.stringify(result));
+          res.render("dashboardbuku", {
+            title: "Dashboard Buku",
+            layout: "../layouts/template-main.ejs",
+            buku,
+          });
         });
-      });
+      } else {
+        res.render("login", {
+          title: "Halaman Login",
+          layout: "../layouts/template-main.ejs",
+          message: "Login Terlebih dahulu",
+          message_warna: "alert-danger",
+        });
+      }
     });
 
     // Form tambah buku

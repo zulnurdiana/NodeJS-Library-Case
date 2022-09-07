@@ -5,7 +5,7 @@
 
   .form-login{
     background-color: #01f5fd;
-    height: 250px;
+    height: 260px;
     padding: 30px;
     width: 500px;
     margin: 10px auto;
@@ -15,11 +15,19 @@
 
 <section id="login">
   <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
       <div class="col-md-12 text-center mb-3">
-        <h1>Form login</h1>
+        <h1>Form login 🔐</h1>
       </div>
+      <% if (message) { %>
+        <div class="col-md-5">
+          <div class="alert <%= message_warna  %> text-center fw-bold" role="alert">
+            <%= message  %> 
+          </div>
+        </div>
+      <% } %>
     </div>
+    
     <div class="row form-login shadow">
       <div class="col-md-12">
         <form action="/proseslogin"  method="post">
@@ -33,6 +41,7 @@
           </div>
           <center>
             <button type="submit" class="btn btn-primary fw-bold">Submit</button>
+            <a href="/registrasi" class="btn btn-success fw-bold">Registrasi</a>
           </center>
         </form>
       </div>
