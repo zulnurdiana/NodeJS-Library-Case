@@ -8,6 +8,7 @@ const db = require("./database/db");
 const app = express();
 app.use(
   session({
+    cookie: { maxAge: 60000 * 5 },
     secret: "secret",
     resave: true,
     saveUninitialized: true,
@@ -69,6 +70,20 @@ db.connect((err) => {
           layout: "../layouts/template-main.ejs",
           message: "Jika belum memiliki akun silahkan registrasi dulu",
           message_warna: "alert-danger",
+        });
+      }
+    });
+
+    // Fitur Logout
+    app.get("/logout", (req, res) => {
+      if (req.session.loggedin) {
+        req.session.destroy(function (err) {
+          res.render("login", {
+            title: "Halaman Login",
+            layout: "../layouts/template-main.ejs",
+            message: "Berhasil Logout",
+            message_warna: "alert-danger",
+          });
         });
       }
     });
