@@ -9,3 +9,10 @@
   padding: 20px;
   padding-top: 90px;
 }
+
+
+#searchNama {
+  display: inline-block;
+  width: 50%;
+  border-radius: 7px;
+}

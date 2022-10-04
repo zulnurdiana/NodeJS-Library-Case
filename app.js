@@ -8,7 +8,7 @@ const db = require("./database/db");
 const app = express();
 app.use(
   session({
-    cookie: { maxAge: 60000 * 5 },
+    cookie: { maxAge: 600000 * 15 },
     secret: "secret",
     resave: true,
     saveUninitialized: true,
@@ -180,6 +180,7 @@ db.connect((err) => {
               title: "Dashboard",
               layout: "../layouts/template-main.ejs",
               hasil,
+              dataada: true,
             });
           }
         );
@@ -191,6 +192,31 @@ db.connect((err) => {
           message_warna: "alert-danger",
         });
       }
+    });
+
+    // searching dashboard by name
+    app.post("/searching", (req, res) => {
+      db.query(
+        `SELECT id_mahasiswa,nama_mahasiswa,nama_buku,tanggal,id_pinjam FROM mahasiswa NATURAL JOIN peminjaman NATURAL JOIN buku WHERE nama_mahasiswa LIKE '%${req.body.search_nama}%'`,
+        (err, result) => {
+          let hasil = JSON.parse(JSON.stringify(result));
+          if (result.length > 0) {
+            res.render("dashboard", {
+              title: "Dashboard",
+              layout: "../layouts/template-main.ejs",
+              hasil,
+              dataada: true,
+            });
+          } else {
+            res.render("dashboard", {
+              title: "Dashboard",
+              layout: "../layouts/template-main.ejs",
+              hasil,
+              dataada: false,
+            });
+          }
+        }
+      );
     });
 
     // Form Create
